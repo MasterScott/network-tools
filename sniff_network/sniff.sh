@@ -9,7 +9,7 @@
 error_checking() {
     command -v bettercap >/dev/null 2>&1 || { echo >&2 "[!] Bettercap is not installed."; exit 1; }
     case $1 in
-        --no-strip|"")
+        --strip|"")
             ;;
         *)
             usage
@@ -22,8 +22,9 @@ usage() {
     echo "Usage:
     ./sniff.sh <parameter>
 where <parameter> is:
-    <empty>         Use Bettercap as MitM.
-    --no-strip      Disable sslstrip."
+    <empty> Run Bettercap as MitM.
+    --strip Enable sslstrip.
+"
 }
 
 sslstrip() {
@@ -63,10 +64,10 @@ while [[ $# -ge 0 ]]
 do
     var="$1"
     case $var in
-        --no-strip)
+        --strip)
+            sslstrip &
             ;;
         *)
-            sslstrip &
             break
             ;;
     esac

@@ -8,14 +8,18 @@
 
 error_checking() {
     command -v bettercap >/dev/null 2>&1 || { echo >&2 "[!] Bettercap is not installed."; exit 1; }
-    case $1 in
-        --strip|""|--injectjs|--injectcss)
-            ;;
-        *)
-            usage
-            exit 1
-            ;;
-    esac
+    argument_array=("$@")
+    for i in "${argument_array[@]}"
+    do
+        case $i in
+            --strip|""|--injectjs|--injectcss)
+                ;;
+            *)
+                usage
+                exit 1
+                ;;
+        esac
+    done
 }
 
 usage() {

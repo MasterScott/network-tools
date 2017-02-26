@@ -9,10 +9,24 @@
 error_checking() {
     command -v bettercap >/dev/null 2>&1 || { echo >&2 "[!] Bettercap is not installed."; exit 1; }
     argument_array=("$@")
+    input_file=false
     for i in "${argument_array[@]}"
     do
+        if [ "${input_file}" = true ]; then
+            if [ -f $i ]; then
+                input_file=false
+                continue
+            else
+                echo "[!] Injection file not found."
+                exit 1
+            fi
+        fi
         case $i in
-            --strip|""|--injectjs|--injectcss)
+            --strip)
+                input_file=false
+                ;;
+            --injectjs|--injectcss)
+                input_file=true
                 ;;
             *)
                 usage

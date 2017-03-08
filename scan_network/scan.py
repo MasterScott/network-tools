@@ -1,12 +1,19 @@
 import subprocess
 import os
 from bs4 import BeautifulSoup
+import netifaces
+from netaddr import IPAddress
 
 
 def add_spaces(total_length, covered):
     return ' '*(total_length-len(covered))
 
-network = '192.168.1.0/24'
+interface = netifaces.gateways()[netifaces.AF_INET][0][1]
+network_address = netifaces.ifaddresses(interface)[netifaces.AF_INET][0]['addr']
+netmask = netifaces.ifaddresses(interface)[netifaces.AF_INET][0]['netmask']
+network = network_address + '/' + str(IPAddress(netmask).netmask_bits())
+print '[*] Scanning network...'
+print '[*] interface: {}, network: {}'.format(interface, network)
 proc = subprocess.Popen(['sudo', 'nmap', '-oX', '-', '-sn', '-PS21,22,25,3389', network], stdout=subprocess.PIPE, preexec_fn=os.setpgrp)
 
 nmap_output = proc.communicate()[0]

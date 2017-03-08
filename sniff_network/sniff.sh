@@ -57,7 +57,6 @@ check_scan() {
     for i in "${argument_array[@]}"
     do
         if [ $i == "--scan" ]; then
-            echo "[*] Scanning network... (Interface: $DEFAULT_INTERFACE, network: $DEFAULT_SUBNET)"
             $BASEDIR/../scan_network/scan.sh
             echo
         fi

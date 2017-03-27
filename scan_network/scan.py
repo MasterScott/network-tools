@@ -23,8 +23,9 @@ print 'Hostname{}|IPv4{}|MAC{}|Vendor'.format(
     add_spaces(18, 'IPv4'),
     add_spaces(20, 'MAC')
 )
-print '--------------------------------------------------------------------------------------'
+print 85*'-'
 
+other_list = []
 soup = BeautifulSoup(nmap_output, 'html.parser')
 for host in soup.findAll('host'):
     host_attrs = {}
@@ -41,6 +42,9 @@ for host in soup.findAll('host'):
             host_attrs['vendor'] = addr_attrs[u'vendor'] if 'vendor' in addr_attrs else ''
 
     hostname = host.find('hostname')
+    if type(hostname) is None:
+        other_list.append(host)
+        continue
     if 'name' in hostname.attrs:
         host_attrs['hostname'] = hostname.attrs['name']
 
@@ -50,3 +54,11 @@ for host in soup.findAll('host'):
         host_attrs['mac'], add_spaces(20, host_attrs['mac']),
         host_attrs['vendor']
     )
+
+print 85*'-'
+
+if other_list:
+    for host in other_list:
+        print host
+        print 45*'#'
+    print 85*'-'

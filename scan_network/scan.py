@@ -42,7 +42,7 @@ for host in soup.findAll('host'):
             host_attrs['vendor'] = addr_attrs[u'vendor'] if 'vendor' in addr_attrs else ''
 
     hostname = host.find('hostname')
-    if type(hostname) is None:
+    if hostname is None:
         other_list.append(host)
         continue
     if 'name' in hostname.attrs:

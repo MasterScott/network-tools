@@ -105,7 +105,7 @@ do
     var="$1"
     case $var in
         --strip)
-            sslstrip &
+            python sslstrip.py &
             ;;
         --injectjs)
             INJECT_JS_FILE="--proxy-module injectjs --js-file $2 "

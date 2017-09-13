@@ -57,7 +57,7 @@ check_scan() {
     for i in "${argument_array[@]}"
     do
         if [ $i == "--scan" ]; then
-            $BASEDIR/../scan_network/scan.sh
+            $BASEDIR/scan.sh
             echo
         fi
     done

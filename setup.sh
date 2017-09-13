@@ -1,4 +1,10 @@
 #!/bin/bash -e
+#
+# setup.sh
+# Copyright (C) 2016 Dimitris Karakostas <dimit.karakostas@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
 
 BASEDIR=$(dirname -- "$(readlink -f -- "${BASH_SOURCE}")")
 
@@ -8,8 +14,8 @@ scanning() {
     source env/bin/activate
     pip install -r requirements.txt
     deactivate
-    sudo apt-get install nmap
     cd ..
+    sudo apt-get install nmap
 }
 
 bettercap() {
@@ -26,11 +32,11 @@ sslstrip() {
     sudo apt-get install python python-twisted-web
 }
 
-echo "[*] Tools to install: "
-select INSTALL in "Bettercap & sslstrip & scanning (nmap, python)" "Bettercap" "sslstrip" "scanning (nmap, python)"
+echo "[*] Select tools to install: "
+select INSTALL in "Bettercap & sslstrip & nmap" "Bettercap" "sslstrip" "nmap"
 do
     case $INSTALL in
-        "Bettercap & sslstrip & scanning (nmap, python)")
+        "Bettercap & sslstrip & nmap")
             sslstrip
             bettercap
             scanning
@@ -44,7 +50,7 @@ do
             sslstrip
             break
             ;;
-        "scanning (nmap, python)")
+        "nmap")
             scanning
             break
             ;;

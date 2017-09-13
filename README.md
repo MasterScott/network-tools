@@ -36,6 +36,13 @@ where <parameter> is:
 
 ## Installation
 
+After cloning this repository make sure to run the following to get all
+submodules:
+
+```sh
+git submodule update --init --recursive
+```
+
 You will need to install several dependencies to use the tools in this
 repository. Choose and install the dependencies you want by running:
 

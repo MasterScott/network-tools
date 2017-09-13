@@ -1,0 +1,3 @@
+[submodule "bettercap-proxy-modules"]
+	path = bettercap-proxy-modules
+	url = https://github.com/evilsocket/bettercap-proxy-modules.git

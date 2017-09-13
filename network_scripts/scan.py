@@ -44,9 +44,12 @@ for host in soup.findAll('host'):
 
     hostname = host.find('hostname')
     if hostname is None:
-        other_list.append(host)
-        continue
-    if 'name' in hostname.attrs:
+        if host_attrs['vendor'] == '':
+            other_list.append(host)
+            continue
+        else:
+            host_attrs['hostname'] = host_attrs['vendor'] + ' (Vendor)'
+    elif 'name' in hostname.attrs:
         host_attrs['hostname'] = hostname.attrs['name']
 
     print '{}{}|{}{}|{}{}|{}'.format(

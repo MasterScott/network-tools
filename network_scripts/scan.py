@@ -6,7 +6,8 @@ from netaddr import IPAddress
 
 
 def add_spaces(total_length, covered):
-    return ' '*(total_length-len(covered))
+    return ' ' * (total_length - len(covered))
+
 
 interface = netifaces.gateways()[netifaces.AF_INET][0][1]
 network_address = netifaces.ifaddresses(interface)[netifaces.AF_INET][0]['addr']
@@ -23,7 +24,7 @@ print 'Hostname{}|IPv4{}|MAC{}|Vendor'.format(
     add_spaces(18, 'IPv4'),
     add_spaces(20, 'MAC')
 )
-print 85*'-'
+print 85 * '-'
 
 other_list = []
 soup = BeautifulSoup(nmap_output, 'html.parser')
@@ -55,10 +56,10 @@ for host in soup.findAll('host'):
         host_attrs['vendor']
     )
 
-print 85*'-'
+print 85 * '-'
 
 if other_list:
     for host in other_list:
         print host
-        print 45*'#'
-    print 85*'-'
+        print 45 * '#'
+    print 85 * '-'
